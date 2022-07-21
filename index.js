@@ -1,4 +1,5 @@
 const express = require('express')
+const router = require('./TaskRout')
 const app = express()
 const port = 3000
 app.use(express.json())
@@ -7,7 +8,10 @@ app.listen(port, () => {
   console.log('hello, kate');
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-  })
+app.use(router)
+
+app.get('/', function (req, res, next) {
+    console.log('hello');
+    next(); 
+})
 
