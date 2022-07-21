@@ -7,3 +7,7 @@ app.listen(port, () => {
   console.log('hello, kate');
 })
 
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
+
