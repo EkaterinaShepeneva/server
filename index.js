@@ -1,10 +1,16 @@
-const express = require('express')
+const express = require('express'),
+fs = require('fs'),
+url = require('url');
 const router = require('./TaskRout')
 const app = express()
-const port = 3000
+require('dotenv').config()
+
+BASE_PORT = process.env.SERVER_BASE_PORT
+
 app.use(express.json())
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+
+app.listen(BASE_PORT, () => {
+  console.log(`Example app listening on port ${BASE_PORT}`)
   console.log('hello, kate');
 })
 
