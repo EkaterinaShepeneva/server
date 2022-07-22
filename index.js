@@ -4,6 +4,7 @@ url = require('url');
 const router = require('./routes/TaskRout')
 const bodyParser = require('body-parser')
 const app = express()
+const dbConfig = require('config').dataBase;
 require('dotenv').config()
 
 BASE_PORT = process.env.SERVER_BASE_PORT
@@ -14,6 +15,7 @@ BASE_PORT = process.env.SERVER_BASE_PORT
  app.use(bodyParser.urlencoded({ extended: true }))
 
 app.listen(BASE_PORT, () => {
+  console.log(config.port)
   console.log(`Example app listening on port ${BASE_PORT}`)
 })
 

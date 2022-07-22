@@ -11,17 +11,18 @@ const router = express.Router();
 
 router.get("/tasks", function (req, res, next) {
   let tasks = JSON.parse(fs.readFileSync("data.json"))
-  
+  const { page, filterBy } = req.query //////////
   const len = tasks.length
   if (req.query.filterBy) {
     if(req.query.filterBy==='done')
     tasks = tasks.filter(task => task.done === true)
-    else tasks= tasks.filter(task => !task.done === true)
+    else tasks= tasks.filter(task => task.done === false)
   }
 
   if (req.query.order === 'asc'){
     tasks = tasks.sort((prev, next) => prev.createdAt - next.createdAt);
-  } else {tasks = tasks.sort((prev, next) => {next.createdAt - prev.createdAt})}
+  } else {tasks = tasks.sort((prev, next) => next.createdAt - prev.createdAt)
+;}
 
   tasks = tasks.slice(((req.query.page-1)*req.query.pp), req.query.pp*req.query.page);
 
@@ -30,9 +31,9 @@ router.get("/tasks", function (req, res, next) {
 });
 
 router.post("/tasks", function (req, res, next) {
-  postTask(req.body);
-  res.send("Записал");
-  next();
+  postTask(req.body);///
+  res.send("Записал");/////crud
+  next();////не нужен
 });
 
 router.patch('/tasks/:idTask', (req, res, next)=>{
@@ -67,12 +68,12 @@ router.patch('/tasks/:idTask', (req, res, next)=>{
 router.delete('/tasks/:idTask',(req, res, next)=>{
 
   let tasks = JSON.parse(
-    fs.readFileSync("data.json")
+    fs.readFileSync("data.json") ///избавится от вложенности 
   );
 
   tasks = tasks.filter((task) => task.uuid !== req.params.idTask)
   
-  fs.writeFileSync("data.json", JSON.stringify(tasks));
+  fs.writeFileSync("data.json", JSON.stringify(tasks)); //имя файла в констан7ту
   res.send('ok')
   next()
 })
@@ -91,7 +92,7 @@ const postTask = (task) => {
 
   tasks.push(task);
 
-  fs.writeFileSync("data.json", JSON.stringify(tasks));
+  fs.writeFileSync("data.json", JSON.stringify(tasks));////асихронно использовать я
 };
 
 const generatorUuid = () => {
