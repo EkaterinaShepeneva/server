@@ -42,6 +42,7 @@ const postTask = (task) => {
     fs.readFileSync("data.json")
   );
 
+  console.log(task);
   task.uuid = generatorUuid();
   task.done = false;
   task.userId = USER_ID;

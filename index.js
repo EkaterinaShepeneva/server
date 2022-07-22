@@ -10,8 +10,8 @@ BASE_PORT = process.env.SERVER_BASE_PORT
 
 //.app.use(express.json())
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+ app.use(bodyParser.json())
+ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.listen(BASE_PORT, () => {
   console.log(`Example app listening on port ${BASE_PORT}`)
