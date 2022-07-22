@@ -30,27 +30,49 @@ router.get("/tasks", function (req, res, next) {
 });
 
 router.post("/tasks", function (req, res, next) {
-  console.log(req.body);
   postTask(req.body);
   res.send("Записал");
   next();
 });
 
 router.patch('/tasks/:idTask', (req, res, next)=>{
-  console.log(req.params.idTask);
-  console.log(req.body);
 
-  const tasks = JSON.parse(
+  let tasks = JSON.parse(
     fs.readFileSync("data.json")
   );
 
-  const newTask = tasks.map((task) => ({
-    ...task,
-    done: task.uuid === req.params.idTask ? !task.done : task.done,
-  }));
+  if (req.body.name){
+    tasks.find((task) => {
+      if (task.uuid === req.params.idTask) {
+        task.name = req.body.name;
+        task.updatedAt = format(new Date(), 'kk:mm:ss dd/MM/yyyy')
+        return true;
+      }
+    });
 
-  fs.writeFileSync("data.json", JSON.stringify(newTask));
+  } else {
+    tasks.find((task) => {
+      if (task.uuid === req.params.idTask) {
+        task.done = !task.done;
+        return true;
+      }
+    })
+  }
+
+  fs.writeFileSync("data.json", JSON.stringify(tasks));
+  res.send('ok')
+  next()
+})
+
+router.delete('/tasks/:idTask',(req, res, next)=>{
+
+  let tasks = JSON.parse(
+    fs.readFileSync("data.json")
+  );
+
+  tasks = tasks.filter((task) => task.uuid !== req.params.idTask)
   
+  fs.writeFileSync("data.json", JSON.stringify(tasks));
   res.send('ok')
   next()
 })
