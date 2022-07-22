@@ -10,10 +10,9 @@ USER_ID = process.env.USER_ID;
 const router = express.Router();
 
 router.get("/tasks", function (req, res, next) {
-  console.log("its router, params = ", req.query);
-
   let tasks = JSON.parse(fs.readFileSync("data.json"))
-
+  
+  const len = tasks.length
   if (req.query.filterBy) {
     if(req.query.filterBy==='done')
     tasks = tasks.filter(task => task.done === true)
@@ -26,7 +25,7 @@ router.get("/tasks", function (req, res, next) {
 
   tasks = tasks.slice(((req.query.page-1)*req.query.pp), req.query.pp*req.query.page);
 
-  res.send({count: tasks.length, tasks});
+  res.send({count: len, tasks});
   next();
 });
 
@@ -36,6 +35,25 @@ router.post("/tasks", function (req, res, next) {
   res.send("Записал");
   next();
 });
+
+router.patch('/tasks/:idTask', (req, res, next)=>{
+  console.log(req.params.idTask);
+  console.log(req.body);
+
+  const tasks = JSON.parse(
+    fs.readFileSync("data.json")
+  );
+
+  const newTask = tasks.map((task) => ({
+    ...task,
+    done: task.uuid === req.params.idTask ? !task.done : task.done,
+  }));
+
+  fs.writeFileSync("data.json", JSON.stringify(newTask));
+  
+  res.send('ok')
+  next()
+})
 
 const postTask = (task) => {
   const tasks = JSON.parse(
