@@ -20,44 +20,19 @@ router.get('/tasks/5', function (req, res, next) {
 
 
 router.post('/tasks/5', function (req, res, next) {
-    writeTask(req.body)
+    postTask(req.body)
     res.send('Записал')
     next()
   });
 
-const writeTask = (newTask) => {
+const postTask = (task) => {
 
+    const tasks = JSON.parse(fs.readFileSync('data.json', (err)=>{
+        if (err) throw 'ERROR';
+    }));
 
-
-
-// читаем файл
-    //const text = fs.readFileSync('data.json', 'utf8');
-
-    const data = [{
-        id: 1,
-        text: 'text'
-    }, {
-        id: 2,
-        text: 't2'
-    }];
-    
-    // создаём файл
-    fs.writeFileSync('data.json', JSON.stringify(data));
-
-    // берём старые данные
-const dbData = JSON.parse(fs.readFileSync('data.json', (err, data) => (data)))
-
-// сливает данные
-fs.writeFileSync('data.json', JSON.stringify([...dbData, newTask]));
-
-
-
-    // const filePath = __dirname + 'text.json';
-
-    // let arrayTask = JSON.parse(fs.readFileSync(filePath, (err, data) => (data) ))
-
-    // //console.log(arrayTask);
-    // fs.writeFileSync(filePath, JSON.stringify([ ...arrayTask, ...newTask]))
+    tasks.push(task);
+    fs.writeFileSync( 'data.json', JSON.stringify(tasks) );
 }
 
 module.exports = router;
