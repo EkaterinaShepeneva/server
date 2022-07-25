@@ -1,16 +1,16 @@
-const error404 = (message) => {
+const error404 = (mes) => {
   const error = {
     code: 404,
-    message: message,
+    message: mes,
   };
 
   return error;
 };
 
-const error400 = (message) => {
+const error400 = (mes) => {
   const error = {
     code: 400,
-    message: message,
+    message: mes,
   };
 
   return error;

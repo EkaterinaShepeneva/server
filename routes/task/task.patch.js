@@ -31,7 +31,7 @@ router.patch("/tasks/:idTask", (req, res) => {
 
   helper.writeArray(tasks);
 
-  const modifiedTask = helper.resSendTask(idTask);
+  const modifiedTask = helper.findTask(idTask);
 
   res.status(200).send(modifiedTask);
 });

@@ -5,6 +5,7 @@ url = require("url");
 
 const getArray = () => {
   const arrayJson = fs.readFileSync(constants.TASK_STORAGE);
+
   const array = JSON.parse(arrayJson);
   return array;
 };
@@ -14,25 +15,29 @@ const writeArray = (array) => {
   fs.writeFileSync(constants.TASK_STORAGE, arrayJson);
 };
 
-const resSendTask = (idTask) => getArray().find((task) => task.uuid === idTask);
+const findTask = (id) => getArray().find((task) => task.uuid === id);
 
 const validate = (task) => {
   const taskClone = getArray().find((item) => item.name === task.name);
   if (taskClone) {
-    const error = {
-      message: "Такая задача есть",
-    };
-    return error;
+    const message = "Такая задача есть";
+    return message;
   }
 
   const invalidСharacters = task.name.match(/[*#^&_~]/gi);
 
   if (invalidСharacters) {
-    const error = {
-      message: "Запрещёнка",
-    };
-    return error;
+    const message = "Запрещёнка";
+    return message;
   }
 };
 
-module.exports = { getArray, writeArray, resSendTask, validate };
+const taskNotFound = (id) => {
+  const taskFound = findTask(id);
+  if (!taskFound) {
+    const message = "Задача не найдена";
+    return message;
+  }
+};
+
+module.exports = { getArray, writeArray, findTask, validate, taskNotFound };

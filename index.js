@@ -25,7 +25,6 @@ app.all("/", (req, res, next) => {
 
 recursive(`${__dirname}/routes/task`).forEach((file) =>
   app.use("/", require(file), function (err, req, res, next) {
-    console.log(err.code);
-    res.status(err.code).send(err.message);
+    res.status(err.code).send(err);
   })
 );
