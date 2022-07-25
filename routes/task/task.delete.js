@@ -14,7 +14,7 @@ router.delete("/tasks/:idTask", (req, res) => {
   tasks = tasks.filter((task) => task.uuid !== idTask);
   helper.writeArray(tasks);
 
-  res.send(remoteTask);
+  res.status(200).send(remoteTask);
 });
 
 module.exports = router;

@@ -24,7 +24,7 @@ router.get("/tasks", (req, res) => {
   }
 
   tasks = tasks.slice((page - 1) * pp, pp * page);
-  res.send({ count: len, tasks });
+  res.status(200).send({ count: len, tasks });
 });
 
 module.exports = router;

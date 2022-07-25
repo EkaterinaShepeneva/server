@@ -33,7 +33,7 @@ router.patch("/tasks/:idTask", (req, res) => {
 
   const modifiedTask = helper.resSendTask(idTask);
 
-  res.send(modifiedTask);
+  res.status(200).send(modifiedTask);
 });
 
 module.exports = router;
