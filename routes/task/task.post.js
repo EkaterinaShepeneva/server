@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const format = require("../../node_modules/date-fns/format/index.js");
 const helper = require("../../helper.js");
 
 require("dotenv").config();
@@ -11,14 +10,15 @@ router.post("/tasks", (req, res) => {
   const task = req.body;
   const tasks = helper.getArray();
   const idTask = String(Math.random());
+  const newTask = {
+    uuid: idTask,
+    done: false,
+    userId: USER_ID,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
 
-  task.uuid = idTask;
-  task.done = false;
-  task.userId = USER_ID;
-  task.createdAt = format(new Date(), "kk:mm:ss dd/MM/yyyy");
-  task.updatedAt = format(new Date(), "kk:mm:ss dd/MM/yyyy");
-
-  tasks.push(task);
+  tasks.push(newTask);
   helper.writeArray(tasks);
 
   const modifiedTask = helper.resSendTask(idTask);
