@@ -14,4 +14,6 @@ const writeArray = (array) => {
   fs.writeFileSync(constants.TASK_STORAGE, arrayJson);
 };
 
-module.exports = { getArray, writeArray };
+const resSendTask = (idTask) => getArray().find((task) => task.uuid === idTask);
+
+module.exports = { getArray, writeArray, resSendTask };

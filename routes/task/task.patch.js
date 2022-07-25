@@ -9,18 +9,20 @@ USER_ID = process.env.USER_ID;
 
 router.patch("/tasks/:idTask", (req, res) => {
   let tasks = helper.getArray();
+  const { idTask } = req.params;
+  const { name } = req.body;
 
-  if (req.body.name) {
+  if (name) {
     tasks.find((task) => {
-      if (task.uuid === req.params.idTask) {
-        task.name = req.body.name;
+      if (task.uuid === idTask) {
+        task.name = name;
         task.updatedAt = format(new Date(), "kk:mm:ss dd/MM/yyyy");
         return true;
       }
     });
   } else {
     tasks.find((task) => {
-      if (task.uuid === req.params.idTask) {
+      if (task.uuid === idTask) {
         task.done = !task.done;
         return true;
       }
@@ -28,7 +30,10 @@ router.patch("/tasks/:idTask", (req, res) => {
   }
 
   helper.writeArray(tasks);
-  res.send("ok");
+
+  const modifiedTask = helper.resSendTask(idTask);
+
+  res.send(modifiedTask);
 });
 
 module.exports = router;
