@@ -13,9 +13,7 @@ router.delete("/tasks/:idTask", (req, res, next) => {
     const { idTask } = req.params;
 
     const notFound = helper.taskNotFound(idTask);
-    console.log("notFound = ", notFound);
     if (notFound) {
-      console.log("im cc");
       throw errors.error404(notFound);
     }
 
@@ -26,7 +24,6 @@ router.delete("/tasks/:idTask", (req, res, next) => {
 
     res.status(200).send(remoteTask);
   } catch (error) {
-    console.log("im b");
     return next(error);
   }
 });

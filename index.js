@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-
+const { error500 } = require("./errors");
 const recursive = require("recursive-readdir-sync");
 
 (fs = require("fs")), (url = require("url"));
@@ -25,6 +25,9 @@ app.all("/", (req, res, next) => {
 
 recursive(`${__dirname}/routes/task`).forEach((file) =>
   app.use("/", require(file), function (err, req, res, next) {
-    res.status(err.code).send(err);
+    if (err.code) {
+      return res.status(err.code).send(err);
+    }
+    res.status(500).send(error500(err.message));
   })
 );

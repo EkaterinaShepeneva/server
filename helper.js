@@ -17,14 +17,15 @@ const writeArray = (array) => {
 
 const findTask = (id) => getArray().find((task) => task.uuid === id);
 
-const validate = (task) => {
-  const taskClone = getArray().find((item) => item.name === task.name);
+const validate = (name) => {
+  const taskClone = getArray().find((item) => item.name === name);
+
   if (taskClone) {
     const message = "Такая задача есть";
+
     return message;
   }
-
-  const invalidСharacters = task.name.match(/[*#^&_~]/gi);
+  const invalidСharacters = name.match(/[*#^&_~]/gi);
 
   if (invalidСharacters) {
     const message = "Запрещёнка";

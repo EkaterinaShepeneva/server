@@ -10,13 +10,14 @@ USER_ID = process.env.USER_ID;
 router.post("/tasks", (req, res, next) => {
   try {
     const task = req.body;
-    const errorValidate = helper.validate(task);
+    const errorValidate = helper.validate(task.name);
 
     if (errorValidate) {
       throw errors.error400(errorValidate);
     }
 
     const tasks = helper.getArray();
+
     const idTask = String(Math.random());
     const newTask = {
       name: task.name,

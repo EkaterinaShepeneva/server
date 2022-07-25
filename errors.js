@@ -15,5 +15,13 @@ const error400 = (mes) => {
 
   return error;
 };
+const error500 = (mes) => {
+  const error = {
+    code: 500,
+    message: mes,
+  };
 
-module.exports = { error400, error404 };
+  return error;
+};
+
+module.exports = { error400, error404, error500 };
