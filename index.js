@@ -1,35 +1,28 @@
-const express = require('express'),
-fs = require('fs'),
-url = require('url');
-const router = require('./routes/TaskRout')
-const bodyParser = require('body-parser')
-const app = express()
-const dbConfig = require('config').dataBase;
-require('dotenv').config()
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
 
-BASE_PORT = process.env.SERVER_BASE_PORT
+const recursive = require("recursive-readdir-sync");
 
-//.app.use(express.json())
+(fs = require("fs")), (url = require("url"));
 
- app.use(bodyParser.json())
- app.use(bodyParser.urlencoded({ extended: true }))
+require("dotenv").config();
+
+BASE_PORT = process.env.SERVER_BASE_PORT;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(BASE_PORT, () => {
-  console.log(config.port)
-  console.log(`Example app listening on port ${BASE_PORT}`)
-})
+  console.log(`Example app listening on port ${BASE_PORT}`);
+});
 
-app.all('/', (req, res, next)=>{
-  console.log('поймал -> ', req.body);
-  res.send('yes')
-})
+app.all("/", (req, res, next) => {
+  console.log("поймал -> ", req.body);
+  res.send("yes");
+  next();
+});
 
-app.use(router)
-
-app.get('/', function (req, res, next) {
-    console.log('hello');
-    next(); 
-})
-
-
-
+recursive(`${__dirname}/routes/task`).forEach((file) =>
+  app.use("/", require(file))
+);
