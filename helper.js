@@ -3,9 +3,8 @@ const constants = require("./constants");
 fs = require("fs");
 url = require("url");
 
-const getArray = () => {
-  const arrayJson = fs.readFileSync(constants.TASK_STORAGE);
-
+async function getArray () {
+  const arrayJson =  await fs.promises.readFile(constants.TASK_STORAGE,'utf8');
   const array = JSON.parse(arrayJson);
   return array;
 };
@@ -15,10 +14,16 @@ const writeArray = (array) => {
   fs.writeFileSync(constants.TASK_STORAGE, arrayJson);
 };
 
-const findTask = (id) => getArray().find((task) => task.uuid === id);
+async function findTask  (id) { 
+  const getTask = await getArray()
+  const task = getTask.find((task) => task.uuid === id);
+  if (task)return task
+}
 
-const validate = (name) => {
-  const taskClone = getArray().find((item) => item.name === name);
+async function validate  (name)  {
+  const getTasks = await getArray()
+  
+  const taskClone = getTasks.find((item) => item.name === name);
 
   if (taskClone) {
     const message = "Такая задача есть";

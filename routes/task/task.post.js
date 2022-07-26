@@ -7,16 +7,18 @@ require("dotenv").config();
 
 USER_ID = process.env.USER_ID;
 
-router.post("/tasks", (req, res, next) => {
+router.post("/tasks", async(req, res, next) => {
   try {
+    console.log('im fine');
     const task = req.body;
-    const errorValidate = helper.validate(task.name);
+    const errorValidate = await helper.validate(task.name);
 
     if (errorValidate) {
       throw errors.error400(errorValidate);
     }
 
-    const tasks = helper.getArray();
+    
+    const tasks = await helper.getArray();
 
     const idTask = String(Math.random());
     const newTask = {
@@ -31,10 +33,11 @@ router.post("/tasks", (req, res, next) => {
     tasks.push(newTask);
     helper.writeArray(tasks);
 
-    const modifiedTask = helper.findTask(idTask);
+    const modifiedTask = await helper.findTask(idTask);
 
     res.status(200).send(modifiedTask);
   } catch (error) {
+    console.log('ERR НА ПОСТУ');
     return next(error);
   }
 });

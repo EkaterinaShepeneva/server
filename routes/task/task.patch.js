@@ -7,9 +7,9 @@ require("dotenv").config();
 
 USER_ID = process.env.USER_ID;
 
-router.patch("/tasks/:idTask", (req, res, next) => {
+router.patch("/tasks/:idTask", async(req, res, next) => {
   try {
-    let tasks = helper.getArray();
+    let tasks = await helper.getArray();
     const { idTask } = req.params;
     const { name } = req.body;
     const notFound = helper.taskNotFound(idTask);

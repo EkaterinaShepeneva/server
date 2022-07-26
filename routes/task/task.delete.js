@@ -7,9 +7,9 @@ require("dotenv").config();
 
 USER_ID = process.env.USER_ID;
 
-router.delete("/tasks/:idTask", (req, res, next) => {
+router.delete("/tasks/:idTask", async(req, res, next) => {
   try {
-    let tasks = helper.getArray();
+    let tasks = await helper.getArray();
     const { idTask } = req.params;
 
     const notFound = helper.taskNotFound(idTask);
