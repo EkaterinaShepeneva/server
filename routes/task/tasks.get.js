@@ -25,7 +25,6 @@ router.get("/tasks", async (req, res, next) => {
     }
 
     tasks = tasks.slice((page - 1) * pp, pp * page);
-    console.log(tasks);
     res.status(200).send({ count: len, tasks });
   } catch (error) {
     next(error);

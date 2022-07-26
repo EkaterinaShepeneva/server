@@ -7,7 +7,7 @@ require("dotenv").config();
 
 USER_ID = process.env.USER_ID;
 
-router.delete("/tasks/:idTask", async(req, res, next) => {
+router.delete("/tasks/:idTask", async (req, res, next) => {
   try {
     let tasks = await helper.getArray();
     const { idTask } = req.params;
@@ -20,7 +20,7 @@ router.delete("/tasks/:idTask", async(req, res, next) => {
     const remoteTask = tasks.find((task) => task.uuid === idTask);
 
     tasks = tasks.filter((task) => task.uuid !== idTask);
-    helper.writeArray(tasks);
+    await helper.writeArray(tasks);
 
     res.status(200).send(remoteTask);
   } catch (error) {
