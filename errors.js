@@ -7,6 +7,15 @@ const error404 = (mes) => {
   return error;
 };
 
+const error422 = (mes) => {
+  const error = {
+    code: 404,
+    message: mes,
+  };
+
+  return error;
+};
+
 const error400 = (mes) => {
   const error = {
     code: 400,
@@ -15,6 +24,7 @@ const error400 = (mes) => {
 
   return error;
 };
+
 const error500 = (mes) => {
   const error = {
     code: 500,
@@ -24,4 +34,4 @@ const error500 = (mes) => {
   return error;
 };
 
-module.exports = { error400, error404, error500 };
+module.exports = { error400, error404, error500, error422 };
