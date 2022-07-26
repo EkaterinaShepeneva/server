@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const helper = require("../../helper.js");
 const errors = require("../../errors");
+const { v4: uuidv4 } = require("uuid");
 
 require("dotenv").config();
 
@@ -18,7 +19,7 @@ router.post("/tasks", async (req, res, next) => {
 
     const tasks = await helper.getArray();
 
-    const idTask = String(Math.random());
+    const idTask = uuidv4();
     const newTask = {
       name: task.name,
       uuid: idTask,
