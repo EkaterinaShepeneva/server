@@ -26,14 +26,15 @@ async function validate(name) {
   const taskClone = getTasks.find((item) => item.name === name);
 
   if (taskClone) {
-    const message = "Такая задача есть";
+    const message = "Such a task already exists";
 
     return message;
   }
   const invalidСharacters = name.match(/[*#^&_~]/gi);
 
   if (invalidСharacters) {
-    const message = "Запрещёнка";
+    console.log(invalidСharacters);
+    const message = `Invalid syntax: ${invalidСharacters}`;
     return message;
   }
 }
@@ -41,7 +42,7 @@ async function validate(name) {
 async function taskNotFound(id) {
   const taskFound = await findTask(id);
   if (!taskFound) {
-    const message = "Задача не найдена";
+    const message = "The task has not been created";
     return message;
   }
 }
