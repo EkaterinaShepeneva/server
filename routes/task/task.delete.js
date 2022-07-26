@@ -12,7 +12,7 @@ router.delete("/tasks/:idTask", async (req, res, next) => {
     let tasks = await helper.getArray();
     const { idTask } = req.params;
 
-    const notFound = helper.taskNotFound(idTask);
+    const notFound = await helper.taskNotFound(idTask);
     if (notFound) {
       throw errors.error404(notFound);
     }

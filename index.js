@@ -17,12 +17,6 @@ app.listen(BASE_PORT, () => {
   console.log(`Example app listening on port ${BASE_PORT}`);
 });
 
-app.all("/", (req, res, next) => {
-  console.log("поймал -> ", req.body);
-  res.send("yes");
-  next();
-});
-
 recursive(`${__dirname}/routes/task`).forEach((file) =>
   app.use("/", require(file), function (err, req, res, next) {
     if (err.code) {

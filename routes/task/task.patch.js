@@ -12,14 +12,14 @@ router.patch("/tasks/:idTask", async (req, res, next) => {
     let tasks = await helper.getArray();
     const { idTask } = req.params;
     const { name } = req.body;
-    const notFound = helper.taskNotFound(idTask);
+    const notFound = await helper.taskNotFound(idTask);
 
     if (notFound) {
       throw errors.error404(notFound);
     }
 
     if (name) {
-      const errorValidate = helper.validate(name);
+      const errorValidate = await helper.validate(name);
 
       if (errorValidate) {
         throw errors.error400(errorValidate);

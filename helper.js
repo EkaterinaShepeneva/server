@@ -38,12 +38,12 @@ async function validate(name) {
   }
 }
 
-const taskNotFound = (id) => {
-  const taskFound = findTask(id);
+async function taskNotFound(id) {
+  const taskFound = await findTask(id);
   if (!taskFound) {
     const message = "Задача не найдена";
     return message;
   }
-};
+}
 
 module.exports = { getArray, writeArray, findTask, validate, taskNotFound };
