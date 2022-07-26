@@ -1,7 +1,5 @@
 const constants = require("./constants");
-
-fs = require("fs");
-url = require("url");
+const fs = require("fs");
 
 async function getArray() {
   const arrayJson = await fs.promises.readFile(constants.TASK_STORAGE, "utf8");

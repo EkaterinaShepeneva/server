@@ -1,29 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const helper = require("../../helper");
+const helpers = require("../../helpers");
 const { FILTER_BY, SORT_BY } = require("../../constants");
-
-require("dotenv").config();
-
-USER_ID = process.env.USER_ID;
 
 router.get("/tasks", async (req, res, next) => {
   try {
-    let tasks = await helper.getArray();
-    const { page, filterBy, pp } = req.query;
-    const { order } = req.query;
-    let len = tasks.length;
+    let tasks = await helpers.getArray();
+
+    const { page = 1, filterBy, pp = 5, order } = req.query;
+    let tasksCount = tasks.length;
 
     if (filterBy) {
       if (filterBy === FILTER_BY.DONE) {
-        tasks = tasks.filter((task) => task.done === true);
-        len = tasks.length;
+        tasks = tasks.filter((task) => task.done);
+        tasksCount = tasks.length;
       } else if (filterBy === FILTER_BY.UNDONE) {
-        tasks = tasks.filter((task) => task.done === false);
-        len = tasks.length;
+        tasks = tasks.filter((task) => !task.done);
+        tasksCount = tasks.length;
       }
     }
-
+    console.log(tasks);
     if (order === SORT_BY.ASC) {
       tasks = tasks.sort((prev, next) => {
         return new Date(prev.createdAt) - new Date(next.createdAt);
@@ -35,7 +31,7 @@ router.get("/tasks", async (req, res, next) => {
     }
 
     tasks = tasks.slice((page - 1) * pp, pp * page);
-    res.status(200).send({ count: len, tasks });
+    res.status(200).send({ count: tasksCount, tasks });
   } catch (error) {
     next(error);
   }

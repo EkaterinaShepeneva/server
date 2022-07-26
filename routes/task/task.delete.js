@@ -1,28 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const helper = require("../../helper");
+const helpers = require("../../helpers");
 const errors = require("../../errors");
-
-require("dotenv").config();
-
-USER_ID = process.env.USER_ID;
 
 router.delete("/tasks/:idTask", async (req, res, next) => {
   try {
-    let tasks = await helper.getArray();
+    let tasks = await helpers.getArray();
     const { idTask } = req.params;
-
-    const notFound = await helper.taskNotFound(idTask);
+    const notFound = await helpers.taskNotFound(idTask);
     if (notFound) {
       throw errors.error404(notFound);
     }
 
-    const remoteTask = tasks.find((task) => task.uuid === idTask);
-
     tasks = tasks.filter((task) => task.uuid !== idTask);
-    await helper.writeArray(tasks);
-
-    res.status(200).send(remoteTask);
+    await helpers.writeArray(tasks);
+    res.status(200).send(idTask);
   } catch (error) {
     return next(error);
   }

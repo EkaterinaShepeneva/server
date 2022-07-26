@@ -4,11 +4,9 @@ const app = express();
 const { error500 } = require("./errors");
 const recursive = require("recursive-readdir-sync");
 
-(fs = require("fs")), (url = require("url"));
-
 require("dotenv").config();
 
-BASE_PORT = process.env.SERVER_BASE_PORT;
+const BASE_PORT = process.env.SERVER_BASE_PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

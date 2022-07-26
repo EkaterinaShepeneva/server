@@ -1,37 +1,21 @@
-const error404 = (mes) => {
-  const error = {
-    code: 404,
-    message: mes,
-  };
+const error404 = (message) => ({
+  code: 404,
+  message,
+});
 
-  return error;
-};
+const error422 = (message) => ({
+  code: 422,
+  message,
+});
 
-const error422 = (mes) => {
-  const error = {
-    code: 404,
-    message: mes,
-  };
+const error400 = (message) => ({
+  code: 400,
+  message,
+});
 
-  return error;
-};
-
-const error400 = (mes) => {
-  const error = {
-    code: 400,
-    message: mes,
-  };
-
-  return error;
-};
-
-const error500 = (mes) => {
-  const error = {
-    code: 500,
-    message: mes,
-  };
-
-  return error;
-};
+const error500 = (message) => ({
+  code: 500,
+  message,
+});
 
 module.exports = { error400, error404, error500, error422 };
