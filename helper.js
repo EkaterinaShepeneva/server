@@ -22,12 +22,15 @@ async function findTask(id) {
 
 async function validate(name) {
   const getTasks = await getArray();
-
   const taskClone = getTasks.find((item) => item.name === name);
+
+  if (name.length <= 1) {
+    const message = "The number of characters must be greater than 1";
+    return message;
+  }
 
   if (taskClone) {
     const message = "Such a task already exists";
-
     return message;
   }
   const invalidСharacters = name.match(/[*#^&_~]/gi);

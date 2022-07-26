@@ -10,18 +10,18 @@ USER_ID = process.env.USER_ID;
 
 router.post("/tasks", async (req, res, next) => {
   try {
-    const task = req.body;
-    const errorValidate = await helper.validate(task.name);
+    const taskName = req.body.name.trim();
+    const errorValidate = await helper.validate(taskName);
 
     if (errorValidate) {
-      throw errors.error400(errorValidate);
+      throw errors.error422(errorValidate);
     }
 
     const tasks = await helper.getArray();
 
     const idTask = uuidv4();
     const newTask = {
-      name: task.name,
+      name: taskName,
       uuid: idTask,
       done: false,
       userId: USER_ID,

@@ -22,7 +22,7 @@ router.patch("/tasks/:idTask", async (req, res, next) => {
       const errorValidate = await helper.validate(name);
 
       if (errorValidate) {
-        throw errors.error400(errorValidate);
+        throw errors.error422(errorValidate);
       }
 
       tasks.find((task) => {
