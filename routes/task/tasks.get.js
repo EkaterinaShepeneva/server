@@ -10,18 +10,26 @@ router.get("/tasks", async (req, res, next) => {
   try {
     let tasks = await helper.getArray();
     const { page, filterBy, pp } = req.query;
-    const len = tasks.length;
+    let len = tasks.length;
 
     if (filterBy) {
-      if (filterBy === "done")
+      if (filterBy === "done") {
         tasks = tasks.filter((task) => task.done === true);
-      else tasks = tasks.filter((task) => task.done === false);
+        len = tasks.length;
+      } else {
+        tasks = tasks.filter((task) => task.done === false);
+        len = tasks.length;
+      }
     }
 
     if (req.query.order === "asc") {
-      tasks = tasks.sort((prev, next) => prev.createdAt - next.createdAt);
+      tasks = tasks.sort((prev, next) => {
+        return new Date(prev.createdAt) - new Date(next.createdAt);
+      });
     } else {
-      tasks = tasks.sort((prev, next) => next.createdAt - prev.createdAt);
+      tasks = tasks.sort((prev, next) => {
+        return new Date(next.createdAt) - new Date(prev.createdAt);
+      });
     }
 
     tasks = tasks.slice((page - 1) * pp, pp * page);
