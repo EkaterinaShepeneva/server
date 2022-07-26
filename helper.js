@@ -33,7 +33,6 @@ async function validate(name) {
   const invalidСharacters = name.match(/[*#^&_~]/gi);
 
   if (invalidСharacters) {
-    console.log(invalidСharacters);
     const message = `Invalid syntax: ${invalidСharacters}`;
     return message;
   }
