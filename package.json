@@ -8,7 +8,7 @@
     "recursive-readdir-sync": "^1.0.6",
     "uuid": "^8.3.2"
   },
-  "name": "sever",
+  "name": "server",
   "version": "1.0.1",
   "main": "index.js",
   "scripts": {
@@ -18,14 +18,21 @@
     "type": "git",
     "url": "git+https://github.com/EkaterinaShepeneva/server.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "katrin",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/EkaterinaShepeneva/server/issues"
   },
   "homepage": "https://github.com/EkaterinaShepeneva/server#readme",
-  "description": "",
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
+  "description": "",
+  "engines": {
+    "node": "v18.4.0"
   }
 }
