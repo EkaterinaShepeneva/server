@@ -14,12 +14,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EkaterinaShepeneva/server.git"
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.9.8"
+  },
+  "engines": {
+    "node": "14.x"
+  }
   "bugs": {
     "url": "https://github.com/EkaterinaShepeneva/server/issues"
   },
@@ -28,4 +38,6 @@
   "devDependencies": {
     "nodemon": "^2.0.19"
   }
+  
 }
+
