@@ -5,13 +5,17 @@
     "date-fns": "^2.29.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "recursive-readdir-sync": "^1.0.6",
+    "sequelize": "^6.21.3",
     "uuid": "^8.3.2"
   },
   "name": "sever",
   "version": "1.0.1",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,6 +30,7 @@
   "homepage": "https://github.com/EkaterinaShepeneva/server#readme",
   "description": "",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "sequelize-cli": "^6.4.1"
   }
 }

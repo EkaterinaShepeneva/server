@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const { error500 } = require("./utils/errors");
 const recursive = require("recursive-readdir-sync");
+const { Sequelize } = require('sequelize');
 
 require("dotenv").config();
 
@@ -14,6 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(BASE_PORT, () => {
   console.log(`Example app listening on port ${BASE_PORT}`);
 });
+
+
+
 
 recursive(`${__dirname}/routes/task`).forEach((file) =>
   app.use("/", require(file), function (err, req, res, next) {
