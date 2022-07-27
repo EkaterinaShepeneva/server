@@ -1,65 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const helpers = require("../../helpers");
-const errors = require("../../errors");
+const {taskNotFound, getArray, validate, writeArray, findTask} = require("../../utils/helpers");
+const errors = require("../../utils/errors");
 
 router.patch("/tasks/:idTask", async (req, res, next) => {
   try {
-    let tasks = await helpers.getArray();
+    let tasks = await getArray();
     const { idTask } = req.params;
-    //const { name } = req.body;
-    const notFound = await helpers.taskNotFound(idTask); ////не использ не
+    const { body } = req;
+    const notFound = await taskNotFound(idTask); 
 
-    console.log("hello");
     if (notFound) {
       throw errors.error404(notFound);
     }
 
-    if (req.body.name) {
-      const errorValidate = await helpers.validate(req.body.name);
+    if (body.name) {
+      const errorValidate = await validate(body.name);
 
       if (errorValidate) {
         throw errors.error422(errorValidate);
       }
     }
 
-    const index = tasks.findIndex((task) => task.uuid === idTask);
-    if (index === -1) {
-      throw errors.error404("Tasks not found");
-    }
+    const oldTask = tasks.find((task) => task.uuid === idTask);
+    const newTask = { ...oldTask, ...body };
+    const newTasks = tasks.map((item) => {
+      if (item.uuid === idTask) {;
+        return newTask;
+      }
+      return item;
+    });
 
-    const oldTask = tasks.splice(index, 1);
-    console.log("oldTask = ", oldTask);
-
-    const newTask = { ...oldTask, ...req.body }; //////
-
-    tasks.push(newTask);
-    // if (name) {
-    //   const errorValidate = await helpers.validate(name);
-
-    //   if (errorValidate) {
-    //     throw errors.error422(errorValidate);
-    //   }
-
-    //   tasks.find((task) => {
-    //     ///
-    //     if (task.uuid === idTask) {
-    //       task.name = name; ///мутирование
-    //       task.updatedAt = new Date();
-    //       return true;
-    //     }
-    //   });
-    // } else {
-    //   tasks.find((task) => {
-    //     if (task.uuid === idTask) {
-    //       task.done = !task.done;
-    //       return true;
-    //     }
-    //   });
-    // }
-
-    await helpers.writeArray(tasks);
-    const modifiedTask = helpers.findTask(idTask);
+    await writeArray(newTasks);
+    const modifiedTask =findTask(idTask);
     res.status(200).send(modifiedTask);
   } catch (err) {
     return next(err);

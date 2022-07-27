@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const helpers = require("../../helpers.js");
-const errors = require("../../errors");
+const helpers = require("../../utils/helpers.js");
+const errors = require("../../utils/errors");
 const { v4: uuidv4 } = require("uuid");
 
 require("dotenv").config();

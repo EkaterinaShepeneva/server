@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const helpers = require("../../helpers");
-const { FILTER_BY, SORT_BY } = require("../../constants");
+const {getArray} = require("../../utils/helpers");
+const { FILTER_BY, SORT_BY } = require("../../utils/constants");
 
 router.get("/tasks", async (req, res, next) => {
   try {
-    let tasks = await helpers.getArray();
+    let tasks = await getArray();
 
     const { page = 1, filterBy, pp = 5, order } = req.query;
     let tasksCount = tasks.length;
@@ -19,7 +19,7 @@ router.get("/tasks", async (req, res, next) => {
         tasksCount = tasks.length;
       }
     }
-    console.log(tasks);
+    
     if (order === SORT_BY.ASC) {
       tasks = tasks.sort((prev, next) => {
         return new Date(prev.createdAt) - new Date(next.createdAt);

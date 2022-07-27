@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const { error500 } = require("./errors");
+const { error500 } = require("./utils/errors");
 const recursive = require("recursive-readdir-sync");
 
 require("dotenv").config();
