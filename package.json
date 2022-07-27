@@ -12,7 +12,9 @@
   "version": "1.0.1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "echo \"Error: no start command specified\"",
+    "stop": "echo \"Error: no stop command specified\""
   },
   "repository": {
     "type": "git",
