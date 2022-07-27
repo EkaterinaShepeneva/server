@@ -1,25 +1,13 @@
-const constants = require("./constants");
-const fs = require("fs");
-
-async function getArray() {
-  const arrayJson = await fs.promises.readFile(constants.TASK_STORAGE, "utf8");
-  const array = JSON.parse(arrayJson);
-  return array;
-}
-
-async function writeArray(array) {
-  const arrayJson = JSON.stringify(array);
-  await fs.promises.writeFile(constants.TASK_STORAGE, arrayJson);
-}
+const db = require("../models");
 
 async function findTask(id) {
-  const getTask = await getArray();
+  const getTask = await db.Task.findAll();
   const task = getTask.find((task) => task.uuid === id);
   if (task) return task;
 }
 
 async function validate(name) {
-  const getTasks = await getArray();
+  const getTasks =  await db.Task.findAll();
   const taskClone = getTasks.find((item) => item.name === name);
 
   if (name.length <= 1) {
@@ -47,4 +35,4 @@ async function taskNotFound(id) {
   }
 }
 
-module.exports = { getArray, writeArray, findTask, validate, taskNotFound };
+module.exports = { findTask, validate, taskNotFound };

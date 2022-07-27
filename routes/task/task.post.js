@@ -3,31 +3,33 @@ const router = express.Router();
 const helpers = require("../../utils/helpers.js");
 const errors = require("../../utils/errors");
 const { v4: uuidv4 } = require("uuid");
+const db = require("../../models");
 
 require("dotenv").config();
-const USER_ID = process.env.USER_ID;
 
 router.post("/tasks", async (req, res, next) => {
   try {
     const taskName = req.body.name.trim();
+    const tasks = tasks = await db.Task.findAll();
     const errorValidate = await helpers.validate(taskName);
 
     if (errorValidate) {
       throw errors.error422(errorValidate);
     }
 
-    const tasks = await helpers.getArray();
     const idTask = uuidv4();
-    const newTask = {
-      name: taskName,
+
+    await db.Task.create({
       uuid: idTask,
+      name: taskName,
       done: false,
-      userId: USER_ID,
       createdAt: new Date(),
       updatedAt: new Date(),
-    };
-    tasks.push(newTask);
-    await helpers.writeArray(tasks);
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
 
     const modifiedTask = await helpers.findTask(idTask);
 
