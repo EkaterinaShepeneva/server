@@ -8,35 +8,18 @@ router.get('/tasks', async (req, res, next) => {
 
   try {
     const { page = 1, filterBy, pp = 5, order } = req.query;
+    let tasks;
+    const whereCondition = filterBy ? { done: FILTER_BY[filterBy] } : {}
 
-    let tasks = [];
-    let tasksCount = 1
+    tasks = await db.Task.findAndCountAll({
+      where: whereCondition,
+      order: [['createdAt', order === 'asc' ? SORT_BY.ASC : SORT_BY.DESC,]],
+      limit: pp,
+      offset: (+page - 1) * +pp
+    })
 
-    if (filterBy) {
-      tasks = await db.Task.findAll({
-        where: {
-          done: filterBy === 'done' ? FILTER_BY.DONE : FILTER_BY.UNDONE,
-        },
-      })
-      tasksCount = tasks.length
-    } else {
-      tasks = await db.Task.findAll()
-      tasksCount = tasks.length
-    }
-
-
-    if (order === SORT_BY.ASC) {
-      tasks = tasks.sort((prev, next) => {
-        return new Date(prev.createdAt) - new Date(next.createdAt);
-      });
-    } else if (order === SORT_BY.DESC) {
-      tasks = tasks.sort((prev, next) => {
-        return new Date(next.createdAt) - new Date(prev.createdAt);
-      });
-    }
-
-    tasks = tasks.slice((page - 1) * pp, pp * page);
-    res.status(200).send({ count: tasksCount, tasks });
+    const { count, rows } = tasks
+    res.status(200).send({ count, tasks: rows });
   } catch (error) {
     next(error);
   }

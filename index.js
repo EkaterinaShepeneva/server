@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const { error500 } = require("./utils/errors");
 const recursive = require("recursive-readdir-sync");
-const { Sequelize } = require("sequelize");
 
 require("dotenv").config();
 

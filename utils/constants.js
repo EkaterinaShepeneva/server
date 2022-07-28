@@ -1,11 +1,11 @@
 module.exports = Object.freeze({
   TASK_STORAGE: "data.json",
   FILTER_BY: {
-    DONE: true,
-    UNDONE: false,
+    done: true,
+    undone: false,
   },
   SORT_BY: {
-    ASC: "asc",
-    DESC: "desc",
+    ASC: "ASC",
+    DESC: "DESC",
   },
 });

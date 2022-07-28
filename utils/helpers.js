@@ -7,7 +7,7 @@ async function findTask(id) {
 }
 
 async function validate(name) {
-  const getTasks =  await db.Task.findAll();
+  const getTasks = await db.Task.findAll();
   const taskClone = getTasks.find((item) => item.name === name);
 
   if (name.length <= 1) {
@@ -19,10 +19,10 @@ async function validate(name) {
     const message = "Such a task already exists";
     return message;
   }
-  const invalidСharacters = name.match(/[*#^&_~]/gi);
+  const invalidCharacters = name.match(/[*#^&_~]/gi);
 
-  if (invalidСharacters) {
-    const message = `Invalid syntax: ${invalidСharacters}`;
+  if (invalidCharacters) {
+    const message = `Invalid syntax: ${invalidCharacters}`;
     return message;
   }
 }

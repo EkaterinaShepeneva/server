@@ -25,8 +25,7 @@ router.patch("/tasks/:idTask", async (req, res, next) => {
       }
     }
 
-    let task = await db.Task.update({ ...body }, { where: { uuid: idTask }, returning: true, plain: true })
-    task = task[1].dataValues
+    const [count, task] = await db.Task.update({ ...body }, { where: { uuid: idTask }, returning: true, plain: true })
 
     res.status(200).send(task);
   } catch (err) {
