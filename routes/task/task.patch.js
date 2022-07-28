@@ -3,7 +3,6 @@ const router = express.Router();
 const {
   taskNotFound,
   validate,
-  findTask,
 } = require("../../utils/helpers");
 const errors = require("../../utils/errors");
 const db = require("../../models");
@@ -26,10 +25,10 @@ router.patch("/tasks/:idTask", async (req, res, next) => {
       }
     }
 
-    await db.Task.update({ ...body }, { where: { uuid: idTask } });
+    let task = await db.Task.update({ ...body }, { where: { uuid: idTask }, returning: true, plain: true })
+    task = task[1].dataValues
 
-    const modifiedTask =findTask(idTask);
-    res.status(200).send(modifiedTask);
+    res.status(200).send(task);
   } catch (err) {
     return next(err);
   }

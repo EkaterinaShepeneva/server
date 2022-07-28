@@ -7,21 +7,21 @@ const db = require('../../models');
 router.get('/tasks', async (req, res, next) => {
 
   try {
-    const { page = 1, filterBy , pp = 5, order } = req.query;
+    const { page = 1, filterBy, pp = 5, order } = req.query;
 
     let tasks = [];
     let tasksCount = 1
 
     if (filterBy) {
-    tasks = await db.Task.findAll({
+      tasks = await db.Task.findAll({
         where: {
           done: filterBy === 'done' ? FILTER_BY.DONE : FILTER_BY.UNDONE,
         },
-      });
+      })
       tasksCount = tasks.length
     } else {
-    tasks = await db.Task.findAll();
-    tasksCount = tasks.length
+      tasks = await db.Task.findAll()
+      tasksCount = tasks.length
     }
 
 

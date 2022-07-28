@@ -16,7 +16,7 @@ router.delete("/tasks/:idTask", async (req, res, next) => {
       where: {
         uuid: idTask,
       },
-    });
+    })
 
     res.status(200).send(idTask);
   } catch (error) {
