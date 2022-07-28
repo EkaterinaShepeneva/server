@@ -23,3 +23,12 @@ recursive(`${__dirname}/routes/task`).forEach((file) =>
     res.status(500).send(error500(err.message));
   })
 );
+
+recursive(`${__dirname}/routes/registration`).forEach((file) =>
+  app.use("/", require(file), function (err, req, res, next) {
+    if (err.code) {
+      return res.status(err.code).send(err);
+    }
+    res.status(500).send(error500(err.message));
+  })
+);
