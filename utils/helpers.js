@@ -1,4 +1,12 @@
 const db = require("../models");
+const jwt = require('jsonwebtoken');
+require("dotenv").config();
+
+const secret = process.env.TOKEN_SECRET;
+
+function generateAccessToken(login) {
+  return jwt.sign({ login: login }, secret, { expiresIn: '1800s' });
+}
 
 async function findTask(id) {
   const getTask = await db.Task.findAll();
@@ -35,4 +43,4 @@ async function taskNotFound(id) {
   }
 }
 
-module.exports = { findTask, validate, taskNotFound };
+module.exports = { findTask, validate, taskNotFound, generateAccessToken };

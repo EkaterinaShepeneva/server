@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const secret = process.env.TOKEN_SECRET;
+const errors = require('../../utils/errors')
+const { generateAccessToken } = require('../../utils/helpers')
 
 
 const db = require('../../models');
@@ -15,27 +17,19 @@ router.post('/registration', async (req, res, next) => {
         //создание пользователя
 
 
-        const token = jwt.sign({ login }, secret)
+        const token = generateAccessToken(login)
 
-        const t = await db.User.findOne({
+
+        await db.User.findOne({
             where: { login: login },
-        }).then((user) => { if (user) throw errors.error422('такой пользователь есть') })
+        }).then(user => { if (user) throw errors.error400('Такой пользователь уже есть'); })
 
-        await db.User.create({
-            login: login,
-            password: password
-        }).catch((err) => { console.log(err); });
-
-        jwt.verify(token, secret, { login }, (err) => {
-            if (err) {
-                console.log('nooo');
-                return res.status(401).send({
-                    message: "это не наш токен!"
-                });
-            }
+        const user = await db.User.create({
+            login,
+            password
         })
 
-        res.status(200).send(token);
+        res.status(200).json(token);
     } catch (error) {
         next(error);
     }

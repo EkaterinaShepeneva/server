@@ -4,9 +4,10 @@ const { FILTER_BY, SORT_BY } = require('../../utils/constants');
 
 const db = require('../../models');
 
-router.get('/tasks', async (req, res, next) => {
+router.get('/tasks/:token', async (req, res, next) => {
 
   try {
+
     const { page = 1, filterBy, pp = 5, order } = req.query;
     let tasks;
     const whereCondition = filterBy ? { done: FILTER_BY[filterBy] } : {}
