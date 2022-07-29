@@ -6,7 +6,7 @@ const recursive = require("recursive-readdir-sync");
 const jwt = require('jsonwebtoken');
 const { auth } = require('./middleware/auth')
 require("dotenv").config();
-
+const cors = require('cors')
 const secret = process.env.TOKEN_SECRET;
 
 
@@ -15,7 +15,7 @@ const BASE_PORT = process.env.SERVER_BASE_PORT;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cors())
 app.listen(BASE_PORT, () => {
   console.log(`Example app listening on port ${BASE_PORT}`);
 });
@@ -23,6 +23,8 @@ app.listen(BASE_PORT, () => {
 app.use('/tasks/:token', async (req, res, next) => {
   const { token } = req.params
   const { login } = req.query
+  console.log(req.headers.authorization);
+
   const verify = auth(login, token)
   if (!verify) res.status(400).send({
     message: "Неверный токен"
@@ -38,7 +40,6 @@ app.use('/tasks/:token', async (req, res, next) => {
   //   }
   // })
   if (verify) next()
-
 })
 
 recursive(`${__dirname}/routes/signIn`).forEach((file) =>
