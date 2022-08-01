@@ -11,15 +11,18 @@ router.post("/tasks", async (req, res, next) => {
   try {
     const name = req.body.name.trim();
     const login = req.body.login
-    const errorValidate = await helpers.validate(name);
 
-    if (errorValidate) {
-      throw errors.error422(errorValidate);
-    }
+
+
 
     const { dataValues } = await db.User.findOne({
       where: { login },
     })
+
+    const errorValidate = await helpers.validate(name, dataValues.userId);
+    if (errorValidate) {
+      throw errors.error422(errorValidate);
+    }
 
     const task = await db.Task.create({
       name,

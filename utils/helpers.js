@@ -14,9 +14,10 @@ async function findTask(id) {
   if (task) return task;
 }
 
-async function validate(name) {
-  const getTasks = await db.Task.findAll();
-  const taskClone = getTasks.find((item) => item.name === name);
+async function validate(name, user_id) {
+  const taskClone = await db.Task.findOne({
+    where: { user_id, name },
+  })
 
   if (name.length <= 1) {
     const message = "The number of characters must be greater than 1";
