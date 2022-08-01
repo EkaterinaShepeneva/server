@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      User.hasMany(models.Task, {
+        as: "tasks",
+        foreignKey: 'userId',
+      });
       // define association here
     }
   }
@@ -28,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       allowNull: false,
       type: DataTypes.STRING
-    }
+    },
   }, {
     sequelize,
     modelName: 'User',

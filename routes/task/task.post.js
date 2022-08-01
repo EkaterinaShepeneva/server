@@ -9,15 +9,21 @@ require("dotenv").config();
 
 router.post("/tasks", async (req, res, next) => {
   try {
-    const taskName = req.body.name.trim();
-    const errorValidate = await helpers.validate(taskName);
+    const name = req.body.name.trim();
+    const login = req.body.login
+    const errorValidate = await helpers.validate(name);
 
     if (errorValidate) {
       throw errors.error422(errorValidate);
     }
 
+    const { dataValues } = await db.User.findOne({
+      where: { login },
+    })
+
     const task = await db.Task.create({
-      name: taskName,
+      name,
+      userId: dataValues.userId
     });
 
     res.status(200).send(task);

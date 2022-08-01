@@ -22,7 +22,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         field: 'updated_at'
-      }
+      },
+      userId: {
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.UUID,
+        allowNull: false,
+        field: 'user_id'
+      },
     });
   },
   async down(queryInterface, Sequelize) {

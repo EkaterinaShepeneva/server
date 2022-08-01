@@ -6,8 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
 
     static associate(models) {
-      // define association here
+      Task.belongsTo(models.User, {
+        as: "user",
+        foreignKey: 'userId',
+      });
     }
+
   }
   Task.init({
     uuid: {
@@ -30,7 +34,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.DATE,
       field: 'updated_at'
-    }
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      field: 'user_id'
+    },
 
   }, {
     sequelize,
@@ -38,5 +47,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'tasks',
     timestamps: true
   });
+
   return Task;
 };
