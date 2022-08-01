@@ -5,7 +5,7 @@ const { auth } = require('../../middleware/auth')
 
 const db = require('../../models');
 
-router.get('/tasks/:token', auth, async (req, res, next) => {
+router.get('/tasks', auth, async (req, res, next) => {
 
   try {
 

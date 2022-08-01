@@ -7,7 +7,7 @@ const auth = require("../../middleware/auth")
 
 require("dotenv").config();
 
-router.post("/tasks/:token", async (req, res, next) => {
+router.post("/tasks", async (req, res, next) => {
   try {
     const taskName = req.body.name.trim();
     const errorValidate = await helpers.validate(taskName);

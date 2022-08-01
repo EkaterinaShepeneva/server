@@ -51,15 +51,5 @@ recursive(`${__dirname}/routes/registration`).forEach((file) =>
   })
 );
 
-// recursive(`${__dirname}/routes/auth`).forEach((file) =>
-//   app.use("/", require(file), function (err, req, res, next) {
-//     console.log('ещё один мидлвер');
-
-//     if (err.code) {
-//       return res.status(err.code).send(err);
-//     }
-//     res.status(500).send(error500(err.message));
-//   })
-// );
 
 
