@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { FILTER_BY, SORT_BY } = require('../../utils/constants');
+const { auth } = require('../../middleware/auth')
 
 const db = require('../../models');
 
-router.get('/tasks/:token', async (req, res, next) => {
+router.get('/tasks/:token', auth, async (req, res, next) => {
 
   try {
 

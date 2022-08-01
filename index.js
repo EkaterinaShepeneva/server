@@ -20,28 +20,6 @@ app.listen(BASE_PORT, () => {
   console.log(`Example app listening on port ${BASE_PORT}`);
 });
 
-app.use('/tasks/:token', async (req, res, next) => {
-  const { token } = req.params
-  const { login } = req.query
-  console.log(req.headers.authorization);
-
-  const verify = auth(login, token)
-  if (!verify) res.status(400).send({
-    message: "Неверный токен"
-  });
-
-
-  // jwt.verify(token, secret, { login }, (err) => {
-  //   if (err) {
-  //     console.log('nooo');
-  //     return res.status(401).send({
-  //       message: "Неверный токен"
-  //     });
-  //   }
-  // })
-  if (verify) next()
-})
-
 recursive(`${__dirname}/routes/signIn`).forEach((file) =>
   app.use("/", require(file), function (err, req, res, next) {
 
