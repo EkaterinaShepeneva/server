@@ -4,7 +4,7 @@ const secret = process.env.TOKEN_SECRET;
 
 const auth = (req, res, next) => {
     try {
-        const { login } = req.query
+        const { login } = (req.method === 'PATCH') ? (req.body) : (req.query);
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, secret, login)
     } catch (error) {
