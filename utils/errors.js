@@ -13,9 +13,19 @@ const error400 = (message) => ({
   message,
 });
 
+const error401 = (message) => ({
+  code: 400,
+  message,
+});
+
+const error403 = (message) => ({
+  code: 403,
+  message,
+});
+
 const error500 = (message) => ({
   code: 500,
   message,
 });
 
-module.exports = { error400, error404, error500, error422 };
+module.exports = { error400, error404, error500, error422, error403, error401 };

@@ -12,12 +12,18 @@ router.post("/signIn", async (req, res, next) => {
 
         const { login, password } = req.body
 
-        const { dataValues } = await db.User.findOne({
+        const user = await db.User.findOne({
             where: { login },
         })
 
+        if (!user) {
+            throw errors.error403('invalid login')
+        }
+
+        const { dataValues } = user
+
         if (dataValues.password !== password) {
-            res.status(200).send('Неверный пароль')
+            throw errors.error403('invalid password')
         }
 
         const token = generateAccessToken(login)
