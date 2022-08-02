@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const secret = process.env.TOKEN_SECRET;
 const errors = require('../../utils/errors')
-
-
 const db = require('../../models');
 
 router.delete('/registration', async (req, res, next) => {

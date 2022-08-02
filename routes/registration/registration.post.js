@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const errors = require('../../utils/errors')
 const { generateAccessToken } = require('../../utils/helpers')
-
 const db = require('../../models');
 
 router.post('/registration', async (req, res, next) => {
