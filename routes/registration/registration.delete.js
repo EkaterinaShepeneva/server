@@ -5,11 +5,23 @@ const db = require('../../models');
 
 router.delete('/registration', async (req, res, next) => {
     try {
+        console.log('log -> ', req.query);
         const { login } = req.query;
-        const t = await db.User.findOne({
+        const user = await db.User.findOne({
             where: { login: login },
-        }).then((user) => { if (!user) throw errors.error404('такого пользователя нет') })
+        })
 
+        if (!user) {
+            throw errors.error400('The user does not exist')
+        }
+
+        const { dataValues } = user
+
+        db.Task.destroy({
+            where: {
+                user_id: dataValues.userId,
+            },
+        })
 
         db.User.destroy({
             where: {
@@ -17,7 +29,7 @@ router.delete('/registration', async (req, res, next) => {
             },
         })
 
-        res.status(200).send(login);
+        res.status(200).send(dataValues);
     } catch (error) {
         next(error);
     }

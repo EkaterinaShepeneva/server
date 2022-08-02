@@ -3,7 +3,7 @@ const router = express.Router();
 const errors = require("../../utils/errors");
 const db = require("../../models");
 const { generateAccessToken } = require('../../utils/helpers')
-
+const passwordHash = require('password-hash');
 require("dotenv").config();
 
 router.post("/signIn", async (req, res, next) => {
@@ -21,7 +21,7 @@ router.post("/signIn", async (req, res, next) => {
 
         const { dataValues } = user
 
-        if (dataValues.password !== password) {
+        if (!passwordHash.verify(password, dataValues.password)) {
             throw errors.error403('invalid password')
         }
 

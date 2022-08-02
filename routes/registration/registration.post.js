@@ -3,6 +3,7 @@ const router = express.Router();
 const errors = require('../../utils/errors')
 const { generateAccessToken } = require('../../utils/helpers')
 const db = require('../../models');
+const passwordHash = require('password-hash');
 
 router.post('/registration', async (req, res, next) => {
     try {
@@ -31,7 +32,7 @@ router.post('/registration', async (req, res, next) => {
         const token = generateAccessToken(login)
         const user = await db.User.create({
             login,
-            password
+            password: passwordHash.generate(password)
         })
 
         res.status(200).json({ token, user });
