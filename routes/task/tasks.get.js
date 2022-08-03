@@ -10,12 +10,12 @@ router.get('/tasks', auth, async (req, res, next) => {
   try {
     const { page = 1, filterBy, pp = 5, order } = req.query;
     const token = req.headers.authorization.split(' ')[1];
-    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    const { userId } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     let tasks;
     const whereCondition = filterBy ? { done: FILTER_BY[filterBy] } : {}
 
     const { dataValues } = await db.User.findOne({
-      where: { login },
+      where: { user_id: userId },
     })
 
     tasks = await db.Task.findAndCountAll({

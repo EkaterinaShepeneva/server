@@ -30,11 +30,12 @@ router.post('/registration', async (req, res, next) => {
             throw errors.error401(`The password must contain one small, one capital letter, one digit. The password must be between 8 and 128 characters long`)
         }
 
-        const token = generateAccessToken(login)
+
         const user = await db.User.create({
             login,
             password: passwordHash.generate(password)
         })
+        const token = generateAccessToken(user.userId)
 
         res.status(200).json({ token, user });
     } catch (error) {

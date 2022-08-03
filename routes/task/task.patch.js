@@ -14,7 +14,7 @@ router.patch("/tasks/:idTask", auth, async (req, res, next) => {
     const { body } = req;
     const { name } = req.body
     const token = req.headers.authorization.split(' ')[1];
-    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    const { userId } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     const notFound = await taskNotFound(idTask);
 
     if (notFound) {
@@ -22,7 +22,7 @@ router.patch("/tasks/:idTask", auth, async (req, res, next) => {
     }
 
     const { dataValues } = await db.User.findOne({
-      where: { login },
+      where: { user_id: userId },
     })
 
     if (name) {

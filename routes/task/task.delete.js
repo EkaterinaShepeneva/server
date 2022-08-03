@@ -9,7 +9,7 @@ router.delete("/tasks/:idTask", auth, async (req, res, next) => {
   try {
     const { idTask } = req.params;
     const token = req.headers.authorization.split(' ')[1];
-    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    const { userId } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 
     const notFound = await taskNotFound(idTask);
 
@@ -18,7 +18,7 @@ router.delete("/tasks/:idTask", auth, async (req, res, next) => {
     }
 
     const { dataValues } = await db.User.findOne({
-      where: { login },
+      where: { user_id: userId },
     })
 
     db.Task.destroy({

@@ -4,8 +4,8 @@ require("dotenv").config();
 
 const secret = process.env.TOKEN_SECRET;
 
-function generateAccessToken(login) {
-  return jwt.sign({ login: login }, secret, { expiresIn: '1800s' });
+function generateAccessToken(userId) {
+  return jwt.sign({ userId }, secret, { expiresIn: '1800s' });
 }
 
 async function findTask(id) {

@@ -24,7 +24,7 @@ router.post("/signIn", async (req, res, next) => {
             throw errors.error403('invalid password')
         }
 
-        const token = generateAccessToken(login)
+        const token = generateAccessToken(user.userId)
 
         res.status(200).json({ token, user });
     } catch (error) {

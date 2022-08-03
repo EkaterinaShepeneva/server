@@ -11,10 +11,10 @@ router.post("/tasks", async (req, res, next) => {
   try {
     const name = req.body.name.trim();
     const token = req.headers.authorization.split(' ')[1];
-    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    const { userId } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 
     const { dataValues } = await db.User.findOne({
-      where: { login },
+      where: { user_id: userId },
     })
 
     const errorValidate = await helpers.validate(name, dataValues.userId);
