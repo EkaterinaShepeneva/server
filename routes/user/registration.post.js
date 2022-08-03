@@ -8,6 +8,7 @@ const passwordHash = require('password-hash');
 router.post('/registration', async (req, res, next) => {
     try {
         const { login, password } = req.body;
+        console.log('Я В ЮЗЕРАХ');
 
         await db.User.findOne({
             where: { login: login },

@@ -20,10 +20,19 @@ app.listen(BASE_PORT, () => {
   console.log(`Example app listening on port ${BASE_PORT}`);
 });
 
-recursive(`${__dirname}/routes/signIn`).forEach((file) =>
+// recursive(`${__dirname}/routes/signIn`).forEach((file) =>
+//   app.use("/", require(file), function (err, req, res, next) {
+
+
+//     if (err.code) {
+//       return res.status(err.code).send(err);
+//     }
+//     res.status(500).send(error500(err.message));
+//   })
+// );
+
+recursive(`${__dirname}/routes/user`).forEach((file) =>
   app.use("/", require(file), function (err, req, res, next) {
-
-
     if (err.code) {
       return res.status(err.code).send(err);
     }
@@ -42,14 +51,14 @@ recursive(`${__dirname}/routes/task`).forEach((file) =>
   })
 );
 
-recursive(`${__dirname}/routes/registration`).forEach((file) =>
-  app.use("/", require(file), function (err, req, res, next) {
-    if (err.code) {
-      return res.status(err.code).send(err);
-    }
-    res.status(500).send(error500(err.message));
-  })
-);
+// recursive(`${__dirname}/routes/registration`).forEach((file) =>
+//   app.use("/", require(file), function (err, req, res, next) {
+//     if (err.code) {
+//       return res.status(err.code).send(err);
+//     }
+//     res.status(500).send(error500(err.message));
+//   })
+// );
 
 
 
