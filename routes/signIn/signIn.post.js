@@ -27,7 +27,7 @@ router.post("/signIn", async (req, res, next) => {
 
         const token = generateAccessToken(login)
 
-        res.status(200).json(token);
+        res.status(200).json({ token, user });
     } catch (error) {
         return next(error);
     }
