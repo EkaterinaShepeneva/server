@@ -8,7 +8,6 @@ require("dotenv").config();
 
 router.post("/signIn", async (req, res, next) => {
     try {
-
         const { login, password } = req.body
 
         const user = await db.User.findOne({

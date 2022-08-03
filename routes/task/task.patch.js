@@ -12,7 +12,9 @@ router.patch("/tasks/:idTask", auth, async (req, res, next) => {
   try {
     const { idTask } = req.params;
     const { body } = req;
-    const { login, name } = req.body
+    const { name } = req.body
+    const token = req.headers.authorization.split(' ')[1];
+    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     const notFound = await taskNotFound(idTask);
 
     if (notFound) {

@@ -10,10 +10,8 @@ require("dotenv").config();
 router.post("/tasks", async (req, res, next) => {
   try {
     const name = req.body.name.trim();
-    const login = req.body.login
-
-
-
+    const token = req.headers.authorization.split(' ')[1];
+    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 
     const { dataValues } = await db.User.findOne({
       where: { login },

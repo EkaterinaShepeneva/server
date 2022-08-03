@@ -8,7 +8,8 @@ const { auth } = require('../../middleware/auth')
 router.delete("/tasks/:idTask", auth, async (req, res, next) => {
   try {
     const { idTask } = req.params;
-    const { login } = req.query
+    const token = req.headers.authorization.split(' ')[1];
+    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 
     const notFound = await taskNotFound(idTask);
 

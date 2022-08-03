@@ -5,8 +5,8 @@ const db = require('../../models');
 
 router.delete('/registration', async (req, res, next) => {
     try {
-        console.log('log -> ', req.query);
-        const { login } = req.query;
+        const token = req.headers.authorization.split(' ')[1];
+        const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
         const user = await db.User.findOne({
             where: { login: login },
         })

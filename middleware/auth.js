@@ -4,8 +4,8 @@ const secret = process.env.TOKEN_SECRET;
 
 const auth = async (req, res, next) => {
     try {
-        const { login } = (req.method === 'PATCH') ? (req.body) : (req.query);
         const token = req.headers.authorization.split(' ')[1];
+        const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
         jwt.verify(token, secret, login)
     } catch (error) {
         next(error)

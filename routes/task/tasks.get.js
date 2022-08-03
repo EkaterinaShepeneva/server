@@ -8,8 +8,9 @@ const db = require('../../models');
 router.get('/tasks', auth, async (req, res, next) => {
 
   try {
-
-    const { page = 1, filterBy, pp = 5, order, login } = req.query;
+    const { page = 1, filterBy, pp = 5, order } = req.query;
+    const token = req.headers.authorization.split(' ')[1];
+    const { login } = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     let tasks;
     const whereCondition = filterBy ? { done: FILTER_BY[filterBy] } : {}
 
